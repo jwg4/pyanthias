@@ -23,6 +23,16 @@ def find_id_by_name(name, root_url):
     raise ValueError(f"Could not find an asset with name '{name}'")
 
 
+def search_by_name(search_string):
+    root_url = get_root_url()
+    url = f"{root_url}/assets"
+    r = requests.get(url)
+    r.raise_for_status()
+    assets = r.json()
+
+    return [asset['asset_id'] for asset in assets if search_string in asset["name"]]
+
+
 def write_enabled_by_id(id_, enabled, root_url):
     url = f"{root_url}/assets/{id_}"
     r = requests.patch(url, json={"is_enabled": 1 if enabled else 0})
