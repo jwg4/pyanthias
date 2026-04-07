@@ -2,6 +2,11 @@
 
 Anthias is the community-supported version of Screenly, a tool for display terminals to run on Raspberry Pi.
 
+If you have an Anthias instance running, there should be a public API which you can use to make 
+changes in the assets displayed from your own code.
+
+Currently the code does not do authentication. The API service can have authorization enabled but this is not supported.
+
 ## How to use it
 
 ```
