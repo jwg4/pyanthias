@@ -9,7 +9,7 @@
 import requests
 
 from anthias.basic import write_enabled
-from anthias.search import find_id_by_name
+from anthias.search import find_id_by_name, search_by_prefix
 from anthias.util import get_root_url
 
 
@@ -34,3 +34,12 @@ def toggle(name):
     enabled = asset["is_enabled"] == 1
 
     write_enabled(name, not enabled)
+
+
+def schedule_image(prefix, start_time, end_time):
+    root_url = get_root_url()
+
+    for asset_id in search_by_prefix(prefix):
+        url = f"{root_url}/assets/{asset_id}"
+        r = requests.patch(url, json={"is_enabled": 1, "start_time": start_time, "end_time": end_time})
+        r.raise_for_status()
