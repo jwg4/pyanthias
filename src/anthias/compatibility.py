@@ -11,6 +11,7 @@ import requests
 from anthias.basic import write_enabled
 from anthias.search import find_id_by_name, search_by_prefix
 from anthias.util import get_root_url
+from anthias.interface import format_datetime
 
 
 def enable(name):
@@ -41,5 +42,10 @@ def schedule_image(prefix, start_time, end_time):
 
     for asset_id in search_by_prefix(prefix):
         url = f"{root_url}/assets/{asset_id}"
-        r = requests.patch(url, json={"is_enabled": 1, "start_time": start_time, "end_time": end_time})
+        payload = {
+            "is_enabled": 1,
+            "start_date": format_datetime(start_time), 
+            "end_date": format_datetime(end_time)
+        }
+        r = requests.patch(url, json=payload)
         r.raise_for_status()
